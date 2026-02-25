@@ -1,0 +1,51 @@
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: SpringSecurity
+  config:
+    import: optional:file:env.properties
+
+  # ─── Database ───────────────────────────────────────────────────────────────
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  # ─── JPA ────────────────────────────────────────────────────────────────────
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # ─── File Upload ─────────────────────────────────────────────────────────────
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: ${MAX_FILE_SIZE}
+      max-request-size: ${MAX_REQUEST_SIZE}
+
+# ─── Cloudflare R2 ────────────────────────────────────────────────────────────
+cloudflare:
+  r2:
+    account-id: ${R2_ACCOUNT_ID}
+    access-key-id: ${R2_ACCESS_KEY_ID}
+    secret-access-key: ${R2_SECRET_ACCESS_KEY}
+    bucket-name: ${R2_BUCKET_NAME}
+    endpoint: ${R2_ENDPOINT}
+    public-url: ${R2_PUBLIC_URL}
+    region: ${R2_REGION:auto}
+
+## ─── JWT ──────────────────────────────────────────────────────────────────────
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: ${JWT_EXPIRATION:900000}
+    refreshExpiration: ${JWT_REFRESH_EXPIRATION:86400000}
